@@ -46,7 +46,7 @@
 </head>
 <body>
 
-    <h1>Waiting List Date Calculator</h1>
+    <h1>London JS Waiting List Calculator</h1>
     <div class="container">
         <label for="position">Position in waiting list:</label>
         <input type="number" id="position" placeholder="Enter your current position" required>
@@ -65,8 +65,8 @@
             const position = parseFloat(document.getElementById('position').value);
             const checkDate = new Date(document.getElementById('date').value);
 
-            // Define how fast the waiting list moves (2.4 positions per week)
-            const positionsPerWeek = 2.4;
+            // Define how fast the waiting list moves (2.38 positions per week)
+            const positionsPerWeek = 2.38;
 
             // Calculate how many weeks it will take to reach position 1
             const weeksToReachOne = position / positionsPerWeek;
@@ -83,7 +83,7 @@
             const finalDateString = finalDate.toLocaleDateString(undefined, options);
 
             // Display the result
-            document.getElementById('result').textContent = `You will reach position 1 on approximately: ${finalDateString}`;
+            document.getElementById('result').textContent = `You will reach position 1 and receive and email from the consulate on approximately: ${finalDateString}`;
         }
     </script>
 
