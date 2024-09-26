@@ -97,8 +97,8 @@
             // Calculate how many positions have moved down since the check date
             const positionsMovedDown = weeksPassed * positionsPerWeek;
 
-            // Calculate the estimated current position
-            const currentPosition = Math.max(0, position - positionsMovedDown).toFixed(2);
+            // Calculate the estimated current position (rounded up)
+            const currentPosition = Math.max(0, Math.ceil(position - positionsMovedDown));
 
             // Display the current estimated position
             document.getElementById('currentPosition').textContent = `Your estimated current position is: ${currentPosition}`;
