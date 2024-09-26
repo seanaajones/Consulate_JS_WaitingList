@@ -57,7 +57,6 @@
         <button onclick="calculateDate()">Calculate</button>
 
         <div class="result" id="result"></div>
-        <div class="result" id="currentPosition"></div>
     </div>
 
     <script>
@@ -86,8 +85,7 @@
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const finalDateString = finalDate.toLocaleDateString(undefined, options);
 
-            // Display the result (when the user will reach position 1)
-            document.getElementById('result').textContent = `You will reach position 1 on approximately: ${finalDateString}`;
+
 
             // Calculate the time difference between today and the check date
             const timeDiff = today - checkDate;
@@ -100,8 +98,8 @@
             // Calculate the estimated current position (rounded up)
             const currentPosition = Math.max(0, Math.ceil(position - positionsMovedDown));
 
-            // Display the current estimated position
-            document.getElementById('currentPosition').textContent = `Your estimated current position is: ${currentPosition}`;
+            // Display the result (when the user will reach position 1)
+            document.getElementById('result').textContent = `Your estimated current position is: ${currentPosition}. You will reach position 1 on approximately: ${finalDateString}`;
         }
     </script>
 
