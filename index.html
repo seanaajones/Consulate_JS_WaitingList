@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting List Date Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Waiting List Date Calculator</h1>
+    <div class="container">
+        <label for="position">Position in waiting list:</label>
+        <input type="number" id="position" placeholder="Enter your current position" required>
+
+        <label for="date">Date you checked this position:</label>
+        <input type="date" id="date" required>
+
+        <button onclick="calculateDate()">Calculate</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateDate() {
+            // Get the user input values
+            const position = parseFloat(document.getElementById('position').value);
+            const checkDate = new Date(document.getElementById('date').value);
+
+            // Define how fast the waiting list moves (2.4 positions per week)
+            const positionsPerWeek = 2.4;
+
+            // Calculate how many weeks it will take to reach position 1
+            const weeksToReachOne = position / positionsPerWeek;
+
+            // Calculate the number of days equivalent to the calculated weeks
+            const daysToReachOne = weeksToReachOne * 7;
+
+            // Add these days to the checkDate
+            const finalDate = new Date(checkDate);
+            finalDate.setDate(finalDate.getDate() + daysToReachOne);
+
+            // Format the final date to a readable string
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const finalDateString = finalDate.toLocaleDateString(undefined, options);
+
+            // Display the result
+            document.getElementById('result').textContent = `You will reach position 1 on approximately: ${finalDateString}`;
+        }
+    </script>
+
+</body>
+</html>
