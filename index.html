@@ -7,17 +7,17 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #c7e7cc;
             margin: 0;
             padding: 20px;
         }
-        h1 {
+        h1,h3 {
             text-align: center;
         }
         .container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 40px;
+            padding: 60px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -29,7 +29,7 @@
             font-size: 16px;
         }
         button {
-            background-color: #007bff;
+            background-color: #f15541;
             color: white;
             border: none;
             cursor: pointer;
@@ -47,27 +47,34 @@
 <body>
 
     <h1>🇮🇹 London JS Waiting List Calculator 🇮🇹</h1>
+    <h3>Estimate your current position, date you'll reach position 1 and date of your appointment</h3>
     <div class="container">
         <label for="position">Position in waiting list:</label>
-        <input type="number" id="position" placeholder="Enter your position" required>
+        <input type="number" id="position" placeholder="Enter your current position" required>
 
         <label for="date">Date you checked this position*:</label>
         <input type="date" id="date" required>
 
         <button onclick="calculateDate()">Calculate</button>
 
+        <div class="result" id="currentPosition"></div>
         <div class="result" id="result"></div>
+        <div class="result" id="appointment"></div>
+<br>
         *If it's your original position from January 2024, enter 30/01/2024. Otherwise enter the date the Consulate updated you on your position.
     </div>
-    
+
     <script>
         function calculateDate() {
             // Get the user input values
             const position = parseFloat(document.getElementById('position').value);
             const checkDate = new Date(document.getElementById('date').value);
 
-            // Define how fast the waiting list moves (2.38 positions per week)
-            const positionsPerWeek = 2.38;
+            // Get today's date
+            const today = new Date();
+
+            // Define how fast the waiting list moves (2.4 positions per week)
+            const positionsPerWeek = 2.4;
 
             // Calculate how many weeks it will take to reach position 1
             const weeksToReachOne = position / positionsPerWeek;
@@ -83,8 +90,42 @@
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const finalDateString = finalDate.toLocaleDateString(undefined, options);
 
-            // Display the result
-            document.getElementById('result').textContent = `You will reach position 1 and receive and email from the consulate on approximately: ${finalDateString}`;
+            // Display the result (when the user will reach position 1)
+            document.getElementById('result').innerHTML = `You will reach position 1 and receive an email from the Consulate with an appointment on approximately: <span style="color: red;">${finalDateString}</span>`;
+
+            // Calculate the time difference between today and the check date
+            const timeDiff = today - checkDate;
+            const daysPassed = timeDiff / (1000 * 60 * 60 * 24);
+            const weeksPassed = daysPassed / 7;
+
+            // Calculate how many positions have moved down since the check date
+            const positionsMovedDown = weeksPassed * positionsPerWeek;
+
+            // Calculate the estimated current position (rounded up)
+            const currentPosition = Math.max(0, Math.ceil(position - positionsMovedDown));
+
+            // Display the current estimated position
+            document.getElementById('currentPosition').innerHTML = `Your estimated current position is: <span style="color: red;">${currentPosition}</span>`;
+
+            // Calculate appointment date: 113 days after the final date
+            const appointmentDate = new Date(finalDate);
+            appointmentDate.setDate(appointmentDate.getDate() + 113);
+
+            // Adjust the appointment date to the nearest Tuesday or Thursday
+            let dayOfWeek = appointmentDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+            if (dayOfWeek !== 2 && dayOfWeek !== 4) {
+                // Find the nearest Tuesday (2) or Thursday (4)
+                const distanceToTuesday = (2 - dayOfWeek + 7) % 7;
+                const distanceToThursday = (4 - dayOfWeek + 7) % 7;
+                const nearestDay = distanceToTuesday <= distanceToThursday ? distanceToTuesday : distanceToThursday;
+                appointmentDate.setDate(appointmentDate.getDate() + nearestDay);
+            }
+
+            // Format the appointment date
+            const appointmentDateString = appointmentDate.toLocaleDateString(undefined, options);
+
+            // Display the appointment date
+            document.getElementById('appointment').innerHTML = `Your estimated appointment date is: <span style="color: red;">${appointmentDateString}</span>`;
         }
     </script>
 
