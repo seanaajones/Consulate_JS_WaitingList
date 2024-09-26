@@ -91,7 +91,7 @@
             const finalDateString = finalDate.toLocaleDateString(undefined, options);
 
             // Display the result (when the user will reach position 1)
-            document.getElementById('result').innerHTML = `You will reach position 1 and receive an email from the Consulate with an appointment on approximately: <span style="color: red;">${finalDateString}</span>`;
+            document.getElementById('result').innerHTML = `You will reach position 1 and receive an email from the Consulate on approximately: <span style="color: red;">${finalDateString}</span>`;
 
             // Calculate the time difference between today and the check date
             const timeDiff = today - checkDate;
