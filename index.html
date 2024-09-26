@@ -79,23 +79,12 @@
             const finalDate = new Date(checkDate);
             finalDate.setDate(finalDate.getDate() + daysToReachOne);
 
-            // Calculate the time difference between today and the check date
-            const timeDiff = today - checkDate;
-            const daysPassed = timeDiff / (1000 * 60 * 60 * 24);
-            const weeksPassed = daysPassed / 7;
-
-            // Calculate how many positions have moved down since the check date
-            const positionsMovedDown = weeksPassed * positionsPerWeek;
-
-            // Calculate the estimated current position
-            const currentPosition = Math.max(0, position - positionsMovedDown).toFixed(2);
-
             // Format the final date to a readable string
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             const finalDateString = finalDate.toLocaleDateString(undefined, options);
 
             // Display the result
-            document.getElementById('result').textContent = `Your estimate current waiting list position is ${currentPosition}. You will reach position 1 and receive and email from the consulate on approximately: ${finalDateString}`;
+            document.getElementById('result').textContent = `You will reach position 1 and receive and email from the consulate on approximately: ${finalDateString}`;
         }
     </script>
 
