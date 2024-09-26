@@ -51,14 +51,15 @@
         <label for="position">Position in waiting list:</label>
         <input type="number" id="position" placeholder="Enter your position" required>
 
-        <label for="date">Date you checked this position:</label>
+        <label for="date">Date you checked this position*:</label>
         <input type="date" id="date" required>
 
         <button onclick="calculateDate()">Calculate</button>
 
         <div class="result" id="result"></div>
+        *If it's your original position from January 2024, enter 30/01/2024. Otherwise enter the date the Consulate updated you on your position.
     </div>
-
+    
     <script>
         function calculateDate() {
             // Get the user input values
